@@ -1,0 +1,191 @@
+.containerMini {
+  margin: 32px 0px;
+  height: 190px;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
+
+.container {
+  height: 288px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  width: 136px;
+  height: 100%;
+  gap: 8px;
+}
+
+.image {
+  width: 121px;
+  height: 100%;
+  background-image: url("../../img/pexels-pixabay-556414.jpg");
+  background-position: center;
+  background-size: cover;
+  margin-left: 4px;
+}
+.nameContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-weight: 500;
+}
+.name {
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 160%;
+  display: flex;
+  flex-direction: column;
+}
+
+.price {
+  font-weight: 500;
+}
+
+.quantity {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.add,
+.remove {
+  width: 24px;
+  height: 24px;
+  justify-content: center;
+  align-items: center;
+  top: 50%;
+}
+.size,
+.color {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+.sizeBoxes,
+.colorBoxes {
+  display: flex;
+  gap: 8px;
+}
+
+.sizeBox {
+  width: 24px;
+  height: 24px;
+  font-family: "Source Sans Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 160%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #1d1f22;
+}
+.sizeBox .active {
+  background-color: #1d1f22;
+  color: #ffffff;
+}
+.color {
+  gap: 8px;
+}
+
+.colorContainer {
+  display: flex;
+  width: 20px;
+  height: 20px;
+  background-color: #ffffff;
+  justify-content: center;
+  align-items: center;
+}
+.colorBox {
+  width: 16px;
+  height: 16px;
+}
+
+.colorContainer.activeColor {
+  border: 1px solid #5ece7b;
+}
+
+.container .info {
+  width: 100%;
+  height: 100%;
+  gap: 8px;
+}
+
+.container .image {
+  width: 200px;
+  height: 100%;
+  margin-left: 24px;
+}
+
+.container .name {
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 27px;
+  gap: 16px;
+}
+
+.container .brand {
+  font-weight: 600;
+}
+
+.container .price {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 24px;
+  margin: 20px 0;
+}
+
+.container .size,
+.container .color {
+  font-family: "Roboto Condensed";
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 18px;
+  text-transform: uppercase;
+  gap: 7px;
+}
+
+.container .sizeBox {
+  width: 63px;
+  height: 45px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: 0.05em;
+}
+
+.container .colorContainer {
+  width: 36px;
+  height: 36px;
+}
+
+.container .colorBox {
+  width: 32px;
+  height: 32px;
+}
+
+.container .number {
+  font-weight: 500;
+  font-size: 24px;
+}
+
+.container .add,
+.container .remove {
+  width: 45px;
+  height: 45px;
+}
+
+.separator {
+  height: 1px;
+  width: 100%;
+  background-color: #e5e5e5;
+  margin: 30px 0 24px 0;
+}

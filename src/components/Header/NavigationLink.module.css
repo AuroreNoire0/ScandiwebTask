@@ -1,0 +1,16 @@
+.link {
+  font-family: "Raleway", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 120%;
+  color: #1d1f22;
+  text-transform: uppercase;
+  padding: 4px 16px 30px 16px;
+  text-decoration: none;
+}
+
+.active {
+  font-weight: 600;
+  color: #5ece7b;
+  border-bottom: 2px solid #5ece7b;
+}

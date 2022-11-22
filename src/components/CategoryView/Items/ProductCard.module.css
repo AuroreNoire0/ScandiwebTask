@@ -1,0 +1,36 @@
+.container {
+  width: 386px;
+  height: 444px;
+  padding: 16px;
+  font-size: 18px;
+  line-height: 160%;
+  margin-bottom: 101px;
+}
+
+.container:hover {
+  box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
+}
+
+.image {
+  display: flex;
+  width: 354px;
+  height: 330px;
+  align-items: center;
+  justify-content: center;
+}
+
+.image img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.title {
+  font-weight: 300;
+  padding-top: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.price {
+  font-weight: 500;
+}

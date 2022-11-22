@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  color: #1d1f22;
+  gap: 22px;
+  font-size: 18px;
+  line-height: 160%;
+  height: 40px;
+}
+
+.currencies {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 38px;
+}
+.currencies div {
+  width: 32px;
+  height: 29px;
+  padding: 0 10px;
+}

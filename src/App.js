@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { Route, Routes, Redirect, Navigate } from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import axios from "axios";
+import Header from "./components/Header/Header";
+import styles from "./App.module.css";
+
+import { gql } from "@apollo/client";
+import CategoryView from "./components/CategoryView/CategoryView";
+import CartOverlay from "./components/CartOverlay";
+import ProductView from "./components/ProductView/ProductView";
+import CartView from "./components/Cart/CartView";
+import { GET_CATEGORIES } from "./Queries/Queries";
+
+class App extends Component {
+  render() {
+    return (
+      <div className={styles.container}>
+        <Header />
+
+        <div className={styles.content}>
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={<Navigate replace to="/all" />}
+            ></Route>
+            <Route path="/:category" element={<CategoryView />} />
+            <Route path="/cart" element={<CartView />}></Route>
+            <Route path="/:category/:id" element={<ProductView />}></Route>
+          </Routes>
+
+          {/* <ProductView /> */}
+          {/* <CartView /> */}
+          {/* <CartOverlay /> */}
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
+
+// USE QUERY TAG instead of use query and import it like import { Query } from "@apollo/client/react/components";

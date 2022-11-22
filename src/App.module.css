@@ -1,0 +1,8 @@
+.container {
+  width: 1440px;
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+}

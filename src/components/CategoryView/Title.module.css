@@ -1,0 +1,14 @@
+.title {
+  width: 299px;
+  height: 231px;
+  margin-left: 101px;
+  display: flex;
+  align-items: center;
+}
+
+.title h2 {
+  height: 68px;
+  font-weight: 400;
+  font-size: 42px;
+  line-height: 160%;
+}

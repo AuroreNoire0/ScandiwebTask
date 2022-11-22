@@ -1,0 +1,62 @@
+.cart {
+  margin: 80px 101px 10px 100px;
+}
+.title {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  margin-bottom: 55px;
+  text-transform: uppercase;
+}
+.separator {
+  height: 1px;
+  width: 100%;
+  background-color: #e5e5e5;
+  margin: 30px 0 24px 0;
+}
+
+.summary {
+  width: 279px;
+  height: 159px;
+}
+
+.data {
+  display: flex;
+  flex-direction: row;
+}
+.labels,
+.values {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.labels {
+  font-weight: 400;
+}
+.labelTotal {
+  font-weight: 500;
+}
+.value {
+  font-weight: 700;
+  padding-left: 5px;
+}
+.order {
+  width: 100%;
+  height: 43px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #5ece7b;
+  border: none;
+  color: #ffffff;
+  font-family: "Raleway";
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  text-transform: uppercase;
+  margin: 16px 0 270px;
+}

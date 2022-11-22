@@ -1,0 +1,17 @@
+.header {
+  position: sticky;
+  width: 1440px;
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 24px 101px 0 101px;
+}
+
+.header > img {
+  position: absolute;
+  width: 41px;
+  height: 41px;
+  left: 699px;
+  top: calc(50% - 41px / 2 + 4.5px);
+}
