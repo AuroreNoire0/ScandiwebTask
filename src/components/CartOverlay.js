@@ -4,8 +4,14 @@ import Minicart from "./Cart/Minicart";
 
 export default class CartOverlay extends Component {
   render() {
+    const onClickOverlay = (e) => {
+      if (e.target === e.currentTarget) {
+        this.props.onToggleMinicart();
+      }
+    };
+
     return (
-      <div className={styles.cartOverlay}>
+      <div className={styles.cartOverlay} onClick={onClickOverlay}>
         <Minicart />
       </div>
     );

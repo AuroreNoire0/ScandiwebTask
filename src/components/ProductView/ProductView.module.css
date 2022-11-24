@@ -86,6 +86,7 @@
   letter-spacing: 0.05em;
   border: 1px solid #1d1f22;
   margin-bottom: 24px;
+  cursor: pointer;
 }
 .sizeBox.active {
   background-color: #1d1f22;
@@ -105,13 +106,18 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 36px;
+  cursor: pointer;
 }
-.colorBox {
+.colorBox, .colorBoxWhite {
   width: 32px;
   height: 32px;
 }
 
-.colorContainer.activeColor {
+.colorBoxWhite{
+  border: 0.5px solid black;
+}
+
+.colorContainer.active {
   border: 1px solid #5ece7b;
 }
 
@@ -141,6 +147,11 @@
   line-height: 120%;
   text-transform: uppercase;
   color: #ffffff;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
 }
 
 .description {

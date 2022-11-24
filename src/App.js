@@ -1,22 +1,29 @@
 import React, { Component } from "react";
 import { Route, Routes, Redirect, Navigate } from "react-router-dom";
-
-import axios from "axios";
 import Header from "./components/Header/Header";
 import styles from "./App.module.css";
-
-import { gql } from "@apollo/client";
 import CategoryView from "./components/CategoryView/CategoryView";
 import CartOverlay from "./components/CartOverlay";
 import ProductView from "./components/ProductView/ProductView";
 import CartView from "./components/Cart/CartView";
-import { GET_CATEGORIES } from "./Queries/Queries";
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = { openMinicart: false };
+  }
+
   render() {
+    const onToggleMinicart = () => {
+      this.setState({ openMinicart: !this.state.openMinicart });
+    };
+
     return (
       <div className={styles.container}>
-        <Header />
+        <Header
+          onToggleMinicart={onToggleMinicart}
+          minicartVisible={this.state.openMinicart}
+        />
 
         <div className={styles.content}>
           <Routes>
@@ -29,10 +36,10 @@ class App extends Component {
             <Route path="/cart" element={<CartView />}></Route>
             <Route path="/:category/:id" element={<ProductView />}></Route>
           </Routes>
-
-          {/* <ProductView /> */}
           {/* <CartView /> */}
-          {/* <CartOverlay /> */}
+          {this.state.openMinicart && (
+            <CartOverlay onToggleMinicart={onToggleMinicart} />
+          )}
         </div>
       </div>
     );

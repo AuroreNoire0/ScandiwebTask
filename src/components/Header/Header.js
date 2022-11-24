@@ -10,7 +10,7 @@ export default class Header extends React.Component {
       <div className={styles.header}>
         <Navigation />
         <img src={logo} alt="Logo, brand icon." />
-        <Actions />
+        <Actions onToggleMinicart={this.props.onToggleMinicart}/>
       </div>
     );
   }

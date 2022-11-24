@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Actions.module.css";
-import emptyCart from "../../svg/emptyCart.svg";
+import miniCart from "../../svg/miniCart.svg";
 import arrowDown from "../../svg/arrowDown.svg";
 
 export default class Actions extends React.Component {
@@ -11,10 +11,10 @@ export default class Actions extends React.Component {
           <div>$</div>
           <img
             src={arrowDown}
-            alt="Arrow down to open select currency window."
+            alt="Arrow to open or close select currency window."
           />
         </div>
-        <img src={emptyCart} alt="Empty cart icon" />
+        <img src={miniCart} alt="Minicart icon" onClick={this.props.onToggleMinicart} />
       </div>
     );
   }
