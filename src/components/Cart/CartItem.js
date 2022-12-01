@@ -4,73 +4,183 @@ import plus from "../../svg/plus.svg";
 import plusMini from "../../svg/plusMini.svg";
 import minus from "../../svg/minus.svg";
 import minusMini from "../../svg/minusMini.svg";
+import arrowLeft from "../../svg/arrowLeft.svg";
+import arrowRight from "../../svg/arrowRight.svg";
+import { connect } from "react-redux";
+import { cartActions } from "../../cart-slice";
 
-export default class CartItem extends React.Component {
+
+class CartItem extends React.Component {
+  constructor() {
+    super();
+    this.state = { currentImage: 0 };
+  }
+  componentDidMount() {
+    const idCart = this.props.minicart ? "minicart" : "mainCart";
+    const showSelectedAttributes = () => {
+      for (const [key, value] of Object.entries(
+        this.props.attributesSelected
+      )) {
+        console.log(key);
+        console.log(this.props.className);
+        const attribute = document
+          .getElementById(`${idCart}`)
+          .querySelector(`.${this.props.className}`)
+          .querySelector(`#${key.replace(/\s+/g, "")}`);
+
+        const trimedValue = value.replace(/\s+/g, "");
+        const selected = attribute.querySelector(`[id="${trimedValue}"]`);
+        selected.classList.add(`${styles.active}`);
+      }
+    };
+    showSelectedAttributes();
+  }
+
   render() {
-    const minicart = this.props.minicart;
-    const black = `#000000`;
-    const red = `#dc0909`;
-    const green = `#33a11a`;
+    const onPreviousImage = () => {
+      this.state.currentImage === 0
+        ? this.setState({ currentImage: this.props.gallery.length - 1 })
+        : this.setState({ currentImage: this.state.currentImage - 1 });
+    };
 
+    const onNextImage = () => {
+      this.state.currentImage === this.props.gallery.length - 1
+        ? this.setState({ currentImage: 0 })
+        : this.setState({ currentImage: this.state.currentImage + 1 });
+    };
+    const onAddToCart = (e) => {
+      e.stopPropagation();
+      console.log(this.props);
+      this.props.dispatch(
+        cartActions.addToCart({
+          product: this.props.item,
+          attributesSelected: this.props.attributesSelected,
+        })
+      );
+    };
+    const onRemoveFromCart =() => {
+      this.props.dispatch(
+        cartActions.removeFromCart({
+          product: this.props.item,
+          attributesSelected: this.props.attributesSelected,
+        })
+      );
+    }
     return (
-      <div>
-        <div className={minicart ? styles.containerMini : styles.container}>
+      <div className={this.props.className}>
+        <div
+          className={
+            this.props.minicart ? styles.containerMini : styles.container
+          }
+          id="cart"
+        >
           <div className={styles.info}>
             <div className={styles.nameContainer}>
               <div className={styles.name}>
-                <span className={styles.brand}>Apollo</span>
-                <span>Running Short</span>{" "}
+                <span className={styles.brand}>{this.props.brand}</span>
+                <span>{this.props.name}</span>{" "}
               </div>
-              <div className={styles.price}>$50.00</div>
-            </div>
-            <div className={styles.size}>
-              <span>Size:</span>
-              <div className={styles.sizeBoxes}>
-                <div className={styles.sizeBox}>XS</div>
-                <div className={styles.sizeBox}>S</div>
-                <div className={styles.sizeBox}>M</div>
-                <div className={styles.sizeBox}>L</div>
+              <div className={styles.price}>
+                {this.props.currency.symbol}
+                {this.props.prices}
               </div>
             </div>
-            <div className={styles.color}>
-              <span>Color:</span>
-              <div className={styles.colorBoxes}>
-                <div
-                  className={`${styles.colorContainer} ${styles.activeColor}`}
-                >
+
+            {this.props.attributes
+              ? this.props.attributes.map((attribute) => (
                   <div
-                    className={styles.colorBox}
-                    style={{ backgroundColor: black }}
-                  />
-                </div>
-                <div className={styles.colorContainer}>
-                  <div
-                    className={styles.colorBox}
-                    style={{ backgroundColor: red }}
-                  ></div>
-                </div>
-                <div className={styles.colorContainer}>
-                  <div
-                    className={styles.colorBox}
-                    style={{ backgroundColor: green }}
-                  ></div>
-                </div>
-              </div>
-            </div>
+                    key={attribute.id}
+                    id={attribute.id.replace(/\s+/g, "")}
+                    className={styles.attribute}
+                  >
+                    <span>{attribute.name}:</span>
+                    {attribute.type === "swatch" ? (
+                      <div
+                        className={styles.colorBoxes}
+                        data-typename={attribute.__typename}
+                        id={attribute.id.replace(/\s+/g, "")}
+                      >
+                        {attribute.items
+                          ? attribute.items.map((item) => (
+                              <div
+                                key={item.value}
+                                className={styles.colorContainer}
+                                id={item.id.replace(/\s+/g, "")}
+                              >
+                                <div
+                                  className={
+                                    item.id !== "White"
+                                      ? `${styles.colorBox}`
+                                      : `${styles.colorBoxWhite}`
+                                  }
+                                  style={{
+                                    backgroundColor: `${item.value}`,
+                                  }}
+                                />
+                              </div>
+                            ))
+                          : null}
+                      </div>
+                    ) : (
+                      <div
+                        className={styles.sizeBoxes}
+                        data-typename={attribute.__typename}
+                        id={attribute.id.replace(/\s+/g, "")}
+                      >
+                        {attribute.items
+                          ? attribute.items.map((item) => (
+                              <div
+                                className={styles.sizeBox}
+                                key={item.value}
+                                id={item.id.replace(/\s+/g, "")}
+                              >
+                                {item.value}
+                              </div>
+                            ))
+                          : null}
+                      </div>
+                    )}
+                  </div>
+                ))
+              : null}
           </div>
           <div className={styles.quantity}>
-            <div className={styles.add}>
-              <img src={minicart ? plusMini : plus} alt="plus" />
+            <div className={styles.add} onClick={onAddToCart}>
+              <img src={this.props.minicart ? plusMini : plus} alt="plus" />
             </div>
-            <div className={styles.number}> 1 </div>
-            <div className={styles.remove}>
-              <img src={minicart ? minusMini : minus} alt="minus" />
+            <div className={styles.number}> {this.props.quantity} </div>
+            <div className={styles.remove} onClick={onRemoveFromCart}>
+              <img src={this.props.minicart ? minusMini : minus} alt="minus" />
             </div>
           </div>
-          <div className={styles.image}></div>
+          <div className={styles.image}>
+            <img
+              src={this.props.gallery[`${this.state.currentImage}`]}
+              alt="item"
+            />
+            {this.props.gallery.length > 1 && (
+              <div className={styles.arrows}>
+                <div
+                  className={styles.arrowContainer}
+                  onClick={onPreviousImage}
+                >
+                  <img src={arrowLeft} alt="arrow left" />
+                </div>
+                <div className={styles.arrowContainer} onClick={onNextImage}>
+                  <img src={arrowRight} alt="arrow right" />
+                </div>
+              </div>
+            )}
+          </div>
         </div>
-        <div className={styles.separator}></div>
+        {!this.props.minicart && <div className={styles.separator}></div>}
       </div>
     );
   }
 }
+
+function mapStateToProps(state) {
+  return { cart: state.cart, currency: state.currency };
+}
+
+export default connect(mapStateToProps)(CartItem);

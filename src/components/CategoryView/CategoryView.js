@@ -19,13 +19,9 @@ class CategoryView extends Component {
   }
 
   componentDidUpdate(prevState) {
-    // console.log('Prev state params:' + prevState.params.category);
-    // console.log('This props params:' + this.props.params.category);
-    // console.log('Curcategroy stsae:' + this.state.curCategory);
     if (prevState.params.category !== this.props.params.category) {
       this.setState({ curCategory: this.props.params.category });
     }
-    // console.log(this.state.category);
   }
 
   render() {

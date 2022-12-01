@@ -20,6 +20,8 @@
 .miniature img {
   width: 100%;
   height: 100%;
+  object-position: center;
+  object-fit: contain;
 }
 .content {
   width: 1145px;
@@ -29,6 +31,7 @@
 }
 
 .image {
+  position: relative;
   width: 610px;
   height: 511px;
   margin: 0px 100px 0 25px;
@@ -36,6 +39,8 @@
 .image img {
   width: 100%;
   height: 100%;
+  object-position: center;
+  object-fit: contain;
 }
 
 .info {
@@ -108,12 +113,13 @@
   margin-bottom: 36px;
   cursor: pointer;
 }
-.colorBox, .colorBoxWhite {
+.colorBox,
+.colorBoxWhite {
   width: 32px;
   height: 32px;
 }
 
-.colorBoxWhite{
+.colorBoxWhite {
   border: 0.5px solid black;
 }
 
@@ -160,4 +166,23 @@ button:disabled {
   font-weight: 400;
   font-size: 16px;
   line-height: 26px;
+}
+
+.outOfStock {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+  opacity: 0.5;
+  text-transform: uppercase;
+  z-index: 1;
+  font-family: "Raleway";
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 160%;
+  color: #8d8f9a;
 }

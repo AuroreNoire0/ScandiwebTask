@@ -21,3 +21,28 @@
   height: 29px;
   padding: 0 10px;
 }
+
+.minicartIcon {
+  position: relative;
+  display: flex;
+}
+
+.minicartBadge {
+  width: 20px;
+  height: 20px;
+  background: #1d1f22;
+  border-radius: 60px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(12px, -9px);
+  z-index: -1;
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #ffffff;
+}

@@ -1,28 +1,40 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
     items: [],
     totalQuantity: 0,
+    totalPrice: 0,
   },
   reducers: {
     addToCart(state, action) {
       const newItem = action.payload.product;
-      const attributes = action.payload.attributes;
-      console.log(action.payload);
-      const existingItem = state.items.find((item) => item.id === newItem.id);
+      const attributesSelected = action.payload.attributesSelected;
+      console.log(newItem);
+      const existingItem = state.items.find(
+        (item) =>
+          item.id === newItem.id &&
+          JSON.stringify(item.attributesSelected) ===
+            JSON.stringify(attributesSelected)
+      );
       state.totalQuantity++;
-      if (!existingItem || existingItem.attributes !== attributes) {
+      state.totalPrice += newItem.prices[0]
+        ? newItem.prices[0].amount
+        : newItem.prices;
+      if (!existingItem) {
         state.items.push({
           id: newItem.id,
           brand: newItem.brand,
           name: newItem.name,
-          attributes: attributes,
+          attributes: newItem.attributes,
           gallery: newItem.gallery,
           quantity: 1,
-          price: newItem.price,
-          totalPrice: newItem.price,
+          prices: newItem.prices[0].amount
+            ? newItem.prices[0].amount
+            : newItem.prices,
+          totalPrice: newItem.prices[0].amount,
+          attributesSelected: attributesSelected,
         });
       } else {
         existingItem.quantity++;
@@ -30,16 +42,36 @@ const cartSlice = createSlice({
       }
     },
     removeFromCart(state, action) {
-      const removeItemId = action.payload;
-      const existingItem = state.items.find((item) => item.id === removeItemId);
+      const removeItem = action.payload.product;
+      const attributesSelected = action.payload.attributesSelected;
+      const existingItem = state.items.find(
+        (item) =>
+          item.id === removeItem.id &&
+          JSON.stringify(item.attributesSelected) ===
+            JSON.stringify(attributesSelected)
+      );
       state.totalQuantity--;
+      state.totalPrice -= existingItem.prices[0]
+        ? existingItem.prices[0].amount
+        : existingItem.prices;
       if (existingItem.quantity === 1) {
-        state.items = state.items.filter((item) => item.id !== removeItemId);
+        state.items = state.items.filter(
+          (item) =>
+            item.id !== removeItem.id ||
+            JSON.stringify(item.attributesSelected) !==
+              JSON.stringify(attributesSelected)
+        );
       } else {
         existingItem.quantity--;
         existingItem.totalPrice =
-          existingItem.totalPrice - existingItem.price[0].amount;
+          existingItem.totalPrice - existingItem.prices[0]
+            ? existingItem.prices[0].amount
+            : existingItem.prices;
       }
+      console.log(current(state));
+    },
+    checkOut(state) {
+      return state = { items: [], totalQuantity: 0, totalPrice: 0 };
     },
   },
 });

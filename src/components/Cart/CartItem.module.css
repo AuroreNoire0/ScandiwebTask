@@ -1,17 +1,19 @@
 .containerMini {
-  margin: 32px 0px;
-  height: 190px;
+  margin: 20px 0px;
+  min-height: 190px;
   display: flex;
   flex-direction: row;
   gap: 4px;
 }
 
 .container {
-  height: 288px;
+  min-height: 288px;
   width: 100%;
   display: flex;
   flex-direction: row;
   gap: 4px;
+  font-family: "Raleway";
+  font-weight: 600;
 }
 
 .info {
@@ -24,28 +26,30 @@
 
 .image {
   width: 121px;
-  height: 100%;
-  background-image: url("../../img/pexels-pixabay-556414.jpg");
-  background-position: center;
-  background-size: cover;
+  min-height: 100%;
   margin-left: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.image img {
+  width: 100%;
+  min-height: 100%;
+  object-fit: contain;
+  object-position: center;
 }
 .nameContainer {
   display: flex;
   flex-direction: column;
   gap: 4px;
   font-weight: 500;
+  line-height: 160%;
 }
 .name {
   font-weight: 300;
   font-size: 16px;
-  line-height: 160%;
   display: flex;
   flex-direction: column;
-}
-
-.price {
-  font-weight: 500;
 }
 
 .quantity {
@@ -53,6 +57,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  line-height: 160%;
 }
 .add,
 .remove {
@@ -62,21 +67,27 @@
   align-items: center;
   top: 50%;
 }
-.size,
-.color {
+
+.attribute {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 4px;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
 }
+
 .sizeBoxes,
 .colorBoxes {
   display: flex;
-  gap: 8px;
+  gap: 7px;
+  flex-wrap: wrap;
+  max-width: 100%;
 }
 
 .sizeBox {
-  width: 24px;
+  min-width: 24px;
   height: 24px;
   font-family: "Source Sans Pro";
   font-style: normal;
@@ -88,7 +99,7 @@
   justify-content: center;
   border: 1px solid #1d1f22;
 }
-.sizeBox .active {
+.sizeBox.active {
   background-color: #1d1f22;
   color: #ffffff;
 }
@@ -104,12 +115,17 @@
   justify-content: center;
   align-items: center;
 }
-.colorBox {
+.colorBox,
+.colorBoxWhite {
   width: 16px;
   height: 16px;
 }
 
-.colorContainer.activeColor {
+.colorBoxWhite {
+  border: 0.5px solid black;
+}
+
+.colorContainer.active {
   border: 1px solid #5ece7b;
 }
 
@@ -121,8 +137,18 @@
 
 .container .image {
   width: 200px;
-  height: 100%;
+  min-height: 100%;
   margin-left: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.container .image img {
+  width: 100%;
+  object-fit: contain;
+  object-position: center;
 }
 
 .container .name {
@@ -143,18 +169,19 @@
   margin: 20px 0;
 }
 
-.container .size,
-.container .color {
+.container .attribute {
   font-family: "Roboto Condensed";
   font-weight: 700;
   font-size: 18px;
   line-height: 18px;
   text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
   gap: 7px;
 }
 
 .container .sizeBox {
-  width: 63px;
+  min-width: 63px;
   height: 45px;
   font-weight: 400;
   font-size: 16px;
@@ -167,7 +194,8 @@
   height: 36px;
 }
 
-.container .colorBox {
+.container .colorBox,
+.container .colorBoxWhite {
   width: 32px;
   height: 32px;
 }
@@ -188,4 +216,26 @@
   width: 100%;
   background-color: #e5e5e5;
   margin: 30px 0 24px 0;
+}
+
+.container .arrows {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+.container .arrowContainer {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.73);
+}
+
+.container .arrowContainer img{
+  width: 8px;
+  min-height: 12px;
 }

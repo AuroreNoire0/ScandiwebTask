@@ -22,7 +22,9 @@ export default class ProductList extends React.Component {
   //   this.setState({ curCategory: category });
   // }
 
+    
   render(props) {
+    
     return (
       <div className={styles.wrapper}>
         <Query
@@ -41,6 +43,7 @@ export default class ProductList extends React.Component {
                 brand={product.brand}
                 gallery={product.gallery}
                 prices={product.prices}
+                product={product}
               />
             ));
           }}

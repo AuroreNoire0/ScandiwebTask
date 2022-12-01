@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Routes, Redirect, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Header from "./components/Header/Header";
 import styles from "./App.module.css";
 import CategoryView from "./components/CategoryView/CategoryView";
@@ -17,9 +17,13 @@ class App extends Component {
     const onToggleMinicart = () => {
       this.setState({ openMinicart: !this.state.openMinicart });
     };
+    const onCloseMinicart = (e) => {
+      this.state.openMinicart && this.setState({ openMinicart: false });
+      
+    };
 
     return (
-      <div className={styles.container}>
+      <div className={styles.container} onClick={onCloseMinicart}>
         <Header
           onToggleMinicart={onToggleMinicart}
           minicartVisible={this.state.openMinicart}

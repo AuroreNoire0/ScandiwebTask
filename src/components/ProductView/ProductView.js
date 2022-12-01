@@ -14,14 +14,13 @@ function withParams(Component) {
 class ProductView extends Component {
   constructor() {
     super();
-    this.state = { attributes: {}, item: {} };
+    this.state = { attributesSelected: {}, item: {}, curImage: 0 };
   }
 
   render() {
     let description = "";
     const setDefault = (response) => {
       let attributesObject = {};
-      this.setState({ item: response });
       response.product.attributes.length > 0 &&
         response.product.attributes.map(
           (attr) => (attributesObject[attr.id] = attr.items[0].id)
@@ -29,18 +28,17 @@ class ProductView extends Component {
 
       this.setState({
         item: response,
-        attributes: {
-          ...this.state.attributes,
+        attributesSelected: {
+          ...this.state.attributesSelected,
           ...attributesObject,
         },
       });
     };
     const onAddToCart = () => {
-      console.log(this.state.attributes);
       this.props.dispatch(
         cartActions.addToCart({
           product: this.state.item.product,
-          attributes: this.state.attributes,
+          attributesSelected: this.state.attributesSelected,
         })
       );
     };
@@ -57,11 +55,16 @@ class ProductView extends Component {
       });
       selected.classList.add(`${styles.active}`);
       this.setState({
-        attributes: {
-          ...this.state.attributes,
+        attributesSelected: {
+          ...this.state.attributesSelected,
           [attributeContainer.id]: selected.id,
         },
       });
+    };
+
+    const onChangeImage = (e) => {
+      const image = e.target.closest(`.${styles.miniature}`).id;
+      this.setState({ curImage: image });
     };
 
     return (
@@ -75,14 +78,19 @@ class ProductView extends Component {
             if (loading) return <div>Loading...</div>;
             if (error) return console.log(error);
             return (
-              console.log(data),
+              // console.log(data),
               (description = parse(data.product.description)),
               (
                 <div className={styles.container}>
                   <div className={styles.miniaturesContainer}>
                     {data.product.gallery
-                      ? data.product.gallery.map((img) => (
-                          <div className={styles.miniature} key={img}>
+                      ? data.product.gallery.map((img, i) => (
+                          <div
+                            className={styles.miniature}
+                            key={img}
+                            id={i}
+                            onClick={onChangeImage}
+                          >
                             {" "}
                             <img src={img} alt="product" />
                           </div>
@@ -91,7 +99,13 @@ class ProductView extends Component {
                   </div>
                   <div className={styles.content}>
                     <div className={styles.image}>
-                      <img src={data.product.gallery[0]} alt="product" />
+                      <img
+                        src={data.product.gallery[this.state.curImage]}
+                        alt="product"
+                      />
+                      {!data.product.inStock && (
+                        <div className={styles.outOfStock}>out of stock</div>
+                      )}
                     </div>
                     <div className={styles.info}>
                       <div className={styles.title}>
@@ -183,6 +197,5 @@ class ProductView extends Component {
     );
   }
 }
-
 
 export default connect()(withParams(ProductView));
