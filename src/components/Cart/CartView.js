@@ -5,6 +5,16 @@ import styles from "./CartView.module.css";
 
 class CartView extends Component {
   render() {
+    const totalPrice = this.props.cart.items
+      .map(
+        (i) =>
+          i.prices.find(
+            (cur) => cur.currency.label === this.props.currency.label
+          ).amount * i.quantity
+      )
+      .reduce((a, b) => a + b, 0)
+      .toFixed(2);
+
     return (
       <div className={styles.cart} id="mainCart">
         <div className={styles.title}>cart</div>
@@ -13,12 +23,15 @@ class CartView extends Component {
           <CartItem
             minicart={false}
             key={`${i.id}${JSON.stringify(i.attributesSelected)}`}
-            className={`${i.id}${JSON.stringify(i.attributesSelected).replace(/[\W_]/g, '')}`}
+            className={`${i.id}${JSON.stringify(i.attributesSelected).replace(
+              /[\W_]/g,
+              ""
+            )}`}
             id={i.id}
             brand={i.brand}
             name={i.name}
-            prices={i.price}
-            totalPrice={i.totalPrice}
+            prices={i.prices}
+            // totalPrice={i.totalPrice}
             attributes={i.attributes}
             attributesSelected={i.attributesSelected}
             quantity={i.quantity}
@@ -35,11 +48,17 @@ class CartView extends Component {
               <span className={styles.labelTotal}>Total:</span>
             </div>
             <div className={styles.values}>
-              <span className={styles.value}>{this.props.currency.symbol}{(this.props.cart.totalPrice * 0.21).toFixed(2)}</span>
+              <span className={styles.value}>
+                {this.props.currency.symbol}
+                {(totalPrice * 0.21).toFixed(2)}
+              </span>
               <span className={styles.value}>
                 {this.props.cart.totalQuantity}
               </span>
-              <span className={styles.value}>{this.props.currency.symbol}{(this.props.cart.totalPrice).toFixed(2)}</span>
+              <span className={styles.value}>
+                {this.props.currency.symbol}
+                {totalPrice}
+              </span>
             </div>
           </div>
           <button className={styles.order}>order</button>
@@ -54,3 +73,4 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(CartView);
+// this.props.cart.items.map(i => (i.prices.find(cur => cur.currency.label === this.props.currency.label).amount * i.quantity))

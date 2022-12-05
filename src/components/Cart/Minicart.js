@@ -3,8 +3,7 @@ import styles from "./Minicart.module.css";
 import CartItem from "./CartItem";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
-import { cartActions } from "../../cart-slice";
-
+import { cartActions } from "../../slices/cart-slice";
 
 const withRouter = (Component) => {
   const Wrapper = (props) => {
@@ -18,18 +17,26 @@ const withRouter = (Component) => {
 
 class Minicart extends React.Component {
   render() {
+    const totalPrice = this.props.cart.items
+      .map(
+        (i) =>
+          i.prices.find(
+            (cur) => cur.currency.label === this.props.currency.label
+          ).amount * i.quantity
+      )
+      .reduce((a, b) => a + b, 0)
+      .toFixed(2);
+
     const onViewBag = (e) => {
-      console.log(e.target);
       this.props.navigate("/cart");
     };
-    console.log(this.props);
     const onClickMinicart = (e) => {
       e.target.id !== "viewBag" && e.stopPropagation();
     };
 
     const onCheckOut = () => {
-      this.props.dispatch(cartActions.checkOut())
-    }
+      this.props.dispatch(cartActions.checkOut());
+    };
 
     return (
       <div id="minicart" className={styles.minicart} onClick={onClickMinicart}>
@@ -54,7 +61,7 @@ class Minicart extends React.Component {
                 id={i.id}
                 brand={i.brand}
                 name={i.name}
-                prices={i.price}
+                prices={i.prices}
                 totalPrice={i.totalPrice}
                 attributes={i.attributes}
                 attributesSelected={i.attributesSelected}
@@ -68,14 +75,16 @@ class Minicart extends React.Component {
             <span className={styles.label}>Total</span>
             <span className={styles.value}>
               {this.props.currency.symbol}
-              {this.props.cart.totalPrice.toFixed(2)}
+              {totalPrice}
             </span>
           </div>
           <div className={styles.buttons}>
             <button id="viewBag" className={styles.viewBag} onClick={onViewBag}>
               view bag
             </button>
-            <button className={styles.checkOut} onClick={onCheckOut}>check out</button>
+            <button className={styles.checkOut} onClick={onCheckOut}>
+              check out
+            </button>
           </div>
         </div>
       </div>

@@ -1,11 +1,11 @@
-import { Query } from "@apollo/client/react/components";
 import React, { Component } from "react";
-import { GET_PRODUCT_DETAILS } from "../../Queries/Queries";
-import styles from "./ProductView.module.css";
 import { useParams } from "react-router-dom";
 import parse from "html-react-parser";
-import { cartActions } from "../../cart-slice";
 import { connect } from "react-redux";
+import { Query } from "@apollo/client/react/components";
+import { GET_PRODUCT_DETAILS } from "../../Queries/Queries";
+import styles from "./ProductView.module.css";
+import { cartActions } from "../../slices/cart-slice";
 
 function withParams(Component) {
   return (props) => <Component {...props} params={useParams()} />;
@@ -14,9 +14,16 @@ function withParams(Component) {
 class ProductView extends Component {
   constructor() {
     super();
-    this.state = { attributesSelected: {}, item: {}, curImage: 0 };
+    this.state = { attributesSelected: {}, item: {}, curImage: 0, price: 0 };
   }
 
+  componentDidUpdate() {
+    const price = this.state.item.product.prices.find(
+      (cur) => cur.currency.label === this.props.currency.label
+    );
+    this.state.price.currency.label !== this.props.currency.label &&
+      this.setState({ ...this.state, price: price });
+  }
   render() {
     let description = "";
     const setDefault = (response) => {
@@ -25,16 +32,20 @@ class ProductView extends Component {
         response.product.attributes.map(
           (attr) => (attributesObject[attr.id] = attr.items[0].id)
         );
-
+      const price = response.product.prices.find(
+        (cur) => cur.currency.label === this.props.currency.label
+      );
       this.setState({
         item: response,
         attributesSelected: {
           ...this.state.attributesSelected,
           ...attributesObject,
         },
+        price: price,
       });
     };
     const onAddToCart = () => {
+      console.log(this.state.item.product);
       this.props.dispatch(
         cartActions.addToCart({
           product: this.state.item.product,
@@ -174,8 +185,8 @@ class ProductView extends Component {
                       <div className={styles.price}>
                         <span>price:</span>
                         <span className={styles.priceValue}>
-                          {data.product.prices[0].amount}{" "}
-                          {data.product.prices[0].currency.symbol}
+                          {this.props.currency.symbol}
+                          {this.state.price.amount}
                         </span>
                       </div>
                       <button
@@ -198,4 +209,8 @@ class ProductView extends Component {
   }
 }
 
-export default connect()(withParams(ProductView));
+function mapStateToProps(state) {
+  return { cart: state.cart, currency: state.currency };
+}
+
+export default connect(mapStateToProps)(withParams(ProductView));

@@ -7,13 +7,12 @@ import minusMini from "../../svg/minusMini.svg";
 import arrowLeft from "../../svg/arrowLeft.svg";
 import arrowRight from "../../svg/arrowRight.svg";
 import { connect } from "react-redux";
-import { cartActions } from "../../cart-slice";
-
+import { cartActions } from "../../slices/cart-slice";
 
 class CartItem extends React.Component {
   constructor() {
     super();
-    this.state = { currentImage: 0 };
+    this.state = { currentImage: 0, price: 0 };
   }
   componentDidMount() {
     const idCart = this.props.minicart ? "minicart" : "mainCart";
@@ -21,8 +20,8 @@ class CartItem extends React.Component {
       for (const [key, value] of Object.entries(
         this.props.attributesSelected
       )) {
-        console.log(key);
-        console.log(this.props.className);
+        // console.log(key);
+        // console.log(this.props.className);
         const attribute = document
           .getElementById(`${idCart}`)
           .querySelector(`.${this.props.className}`)
@@ -33,7 +32,23 @@ class CartItem extends React.Component {
         selected.classList.add(`${styles.active}`);
       }
     };
+
     showSelectedAttributes();
+    const price = this.props.prices.find(
+      (cur) => cur.currency.label === this.props.currency.label
+    );
+
+    this.setState({
+      price: price,
+    });
+  }
+
+  componentDidUpdate() {
+    const price = this.props.prices.find(
+      (cur) => cur.currency.label === this.props.currency.label
+    );
+    this.state.price.currency.label !== this.props.currency.label &&
+      this.setState({ ...this.state, price: price });
   }
 
   render() {
@@ -58,14 +73,14 @@ class CartItem extends React.Component {
         })
       );
     };
-    const onRemoveFromCart =() => {
+    const onRemoveFromCart = () => {
       this.props.dispatch(
         cartActions.removeFromCart({
           product: this.props.item,
           attributesSelected: this.props.attributesSelected,
         })
       );
-    }
+    };
     return (
       <div className={this.props.className}>
         <div
@@ -82,7 +97,7 @@ class CartItem extends React.Component {
               </div>
               <div className={styles.price}>
                 {this.props.currency.symbol}
-                {this.props.prices}
+                {this.state.price.amount}
               </div>
             </div>
 

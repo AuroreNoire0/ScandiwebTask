@@ -1,25 +1,37 @@
 .container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 114px;
+  font-family: "Raleway";
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 160%;
+  text-align: right;
+  color: #1d1f22;
+  padding: 0px 20px;
+}
+.actions {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   color: #1d1f22;
-  gap: 22px;
   font-size: 18px;
   line-height: 160%;
   height: 40px;
+  width: 100%;
+  padding-top: 11px;
 }
 
 .currencies {
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 38px;
-}
-.currencies div {
-  width: 32px;
-  height: 29px;
-  padding: 0 10px;
+  justify-content: flex-start;
+  gap: 10px;
 }
 
 .minicartIcon {
@@ -45,4 +57,29 @@
   justify-content: center;
   text-align: center;
   color: #ffffff;
+}
+
+.currencyList {
+  width: 114px;
+  padding: 12px 0px;
+  visibility: visible;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
+  background-color: #ffffff;
+
+}
+
+.currencyItem {
+  width: 100%;
+  height: 45px;
+  padding: 0px 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.currencyItem:hover {
+  background-color: #eeeeee;
 }

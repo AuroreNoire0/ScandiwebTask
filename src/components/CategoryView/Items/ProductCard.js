@@ -1,10 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
 import styles from "./ProductCard.module.css";
 import greenCart from "../../../svg/greenCart.svg";
-import image from "../../../img/pexels-pixabay-556414.jpg";
-import { useNavigate } from "react-router-dom";
-import { cartActions } from "../../../cart-slice";
-import { connect } from "react-redux";
+import { cartActions } from "../../../slices/cart-slice";
 
 const withRouter = (Component) => {
   const Wrapper = (props) => {
@@ -18,15 +17,18 @@ const withRouter = (Component) => {
 class ProductCard extends React.Component {
   constructor() {
     super();
-    this.state = { attributesSelected: {}, item: {}, curImage: 0 };
+    this.state = { attributesSelected: {}, item: {}, curImage: 0, price: 0 };
   }
   componentDidMount() {
     let attributesObject = {};
-    // this.setState({ item: this.props.product });
     this.props.product.attributes.length > 0 &&
       this.props.product.attributes.map(
         (attr) => (attributesObject[attr.id] = attr.items[0].id)
       );
+
+    const price = this.props.product.prices.find(
+      (cur) => cur.currency.label === this.props.currency.label
+    );
 
     this.setState({
       item: this.props.product,
@@ -34,10 +36,16 @@ class ProductCard extends React.Component {
         ...this.state.attributesSelected,
         ...attributesObject,
       },
+      price: price,
     });
-    // console.log(this.props.product);
   }
-
+  componentDidUpdate() {
+    const price = this.props.product.prices.find(
+      (cur) => cur.currency.label === this.props.currency.label
+    );
+    this.state.price.currency.label !== this.props.currency.label &&
+      this.setState({ ...this.state, price: price });
+  }
   render() {
     const onClickProduct = (e) => {
       const clicked = e.target.closest("#cardContainer");
@@ -64,6 +72,7 @@ class ProductCard extends React.Component {
           attributesSelected: this.state.attributesSelected,
         })
       );
+      localStorage.setItem("cart", JSON.stringify(this.props.cart));
     };
 
     return (
@@ -91,7 +100,8 @@ class ProductCard extends React.Component {
             {this.props.brand} {this.props.name}
           </div>
           <div className={styles.price}>
-            {this.props.prices[0].amount} {this.props.prices[0].currency.symbol}
+            {this.state.price.currency?.symbol}
+            {this.state.price.amount}
           </div>
         </div>
         {!this.props.inStock && (
@@ -102,4 +112,8 @@ class ProductCard extends React.Component {
   }
 }
 
-export default connect()(withRouter(ProductCard));
+function mapStateToProps(state) {
+  return { cart: state.cart, currency: state.currency };
+}
+
+export default connect(mapStateToProps)(withRouter(ProductCard));

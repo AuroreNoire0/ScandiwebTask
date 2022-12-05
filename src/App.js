@@ -6,24 +6,38 @@ import CategoryView from "./components/CategoryView/CategoryView";
 import CartOverlay from "./components/CartOverlay";
 import ProductView from "./components/ProductView/ProductView";
 import CartView from "./components/Cart/CartView";
+import { connect } from "react-redux";
+import { currencyActions } from "./slices/currency-slice";
 
 class App extends Component {
   constructor() {
     super();
-    this.state = { openMinicart: false };
+    this.state = {
+      openMinicart: false,
+      // cart: JSON.parse(localStorage.getItem("cart")) || {
+      //   items: [],
+      //   totalQuantity: 0,
+      // },
+      // currency: JSON.parse(localStorage.getItem("currency")) || {
+      //   label: "USD",
+      //   symbol: "$",
+      //   dropdown: false,
+      // },
+    };
   }
 
   render() {
     const onToggleMinicart = () => {
       this.setState({ openMinicart: !this.state.openMinicart });
     };
-    const onCloseMinicart = (e) => {
+    const onCloseDropdowns = (e) => {
       this.state.openMinicart && this.setState({ openMinicart: false });
-      
+      this.props.currency.dropdown &&
+        this.props.dispatch(currencyActions.toggleDropdown(false));
     };
 
     return (
-      <div className={styles.container} onClick={onCloseMinicart}>
+      <div className={styles.container} onClick={onCloseDropdowns}>
         <Header
           onToggleMinicart={onToggleMinicart}
           minicartVisible={this.state.openMinicart}
@@ -40,7 +54,7 @@ class App extends Component {
             <Route path="/cart" element={<CartView />}></Route>
             <Route path="/:category/:id" element={<ProductView />}></Route>
           </Routes>
-          {/* <CartView /> */}
+
           {this.state.openMinicart && (
             <CartOverlay onToggleMinicart={onToggleMinicart} />
           )}
@@ -50,6 +64,8 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return { cart: state.cart, currency: state.currency };
+}
 
-// USE QUERY TAG instead of use query and import it like import { Query } from "@apollo/client/react/components";
+export default connect(mapStateToProps)(App);

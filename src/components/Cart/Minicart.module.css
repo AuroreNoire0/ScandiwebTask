@@ -22,12 +22,9 @@
 .products {
   display: flex;
   flex-direction: column;
-  /* gap: 32px; */
   max-height: 400px;
   overflow-y: auto;
 }
-
-
 
 .total {
   display: flex;
