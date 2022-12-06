@@ -20,7 +20,10 @@ class ProductCard extends React.Component {
     this.state = { attributesSelected: {}, item: {}, curImage: 0, price: 0 };
   }
   componentDidMount() {
+    console.log(this.props);
+    console.log(this.props.attributes);
     let attributesObject = {};
+    console.log(attributesObject);
     this.props.product.attributes.length > 0 &&
       this.props.product.attributes.map(
         (attr) => (attributesObject[attr.id] = attr.items[0].id)
@@ -83,6 +86,7 @@ class ProductCard extends React.Component {
         onClick={onClickProduct}
         onMouseEnter={onToggleGreenCart}
         onMouseLeave={onToggleGreenCart}
+        
       >
         <div className={styles.image}>
           <img src={this.props.gallery[0]} alt="item" />

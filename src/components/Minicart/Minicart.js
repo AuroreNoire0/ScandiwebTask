@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Minicart.module.css";
-import CartItem from "./CartItem";
+import CartItem from "../CartView/CartItem";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { cartActions } from "../../slices/cart-slice";

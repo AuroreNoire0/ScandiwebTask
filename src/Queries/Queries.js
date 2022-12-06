@@ -8,42 +8,6 @@ export const GET_CATEGORIES = gql`
   }
 `;
 
-// export const GET_PRODUCTS = gql`
-//   {
-//     categories {
-//       name
-//       products {
-//         id
-//         name
-//         inStock
-//         gallery
-//         prices {
-//           currency {
-//             label
-//             symbol
-//           }
-//           amount
-//         }
-//         brand
-//       }
-//     }
-//   }
-// `;
-
-// export const GET_PRODUCTS = gql`
-//   {
-//     categories {
-//       name
-//       products {
-//         id
-//         name
-//         inStock
-//         gallery
-//         brand
-//       }
-//     }
-//   }
-// `;
 
 export const GET_PRODUCTS_FROM_CATEGORY = gql`
   query GET_PRODUCTS_FROM_CATEGORY($title: String!) {
@@ -59,6 +23,7 @@ export const GET_PRODUCTS_FROM_CATEGORY = gql`
           id
           name
           type
+          __typename @skip(if: true)
           items {
             displayValue
             value
@@ -91,6 +56,7 @@ export const GET_PRODUCT_DETAILS = gql`
         id
         name
         type
+        __typename @skip(if: true)
         items {
           displayValue
           value

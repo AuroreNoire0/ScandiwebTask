@@ -3,9 +3,9 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import Header from "./components/Header/Header";
 import styles from "./App.module.css";
 import CategoryView from "./components/CategoryView/CategoryView";
-import CartOverlay from "./components/CartOverlay";
+import CartOverlay from "./components/Minicart/CartOverlay";
 import ProductView from "./components/ProductView/ProductView";
-import CartView from "./components/Cart/CartView";
+import CartView from "./components/CartView/CartView";
 import { connect } from "react-redux";
 import { currencyActions } from "./slices/currency-slice";
 
@@ -14,15 +14,6 @@ class App extends Component {
     super();
     this.state = {
       openMinicart: false,
-      // cart: JSON.parse(localStorage.getItem("cart")) || {
-      //   items: [],
-      //   totalQuantity: 0,
-      // },
-      // currency: JSON.parse(localStorage.getItem("currency")) || {
-      //   label: "USD",
-      //   symbol: "$",
-      //   dropdown: false,
-      // },
     };
   }
 

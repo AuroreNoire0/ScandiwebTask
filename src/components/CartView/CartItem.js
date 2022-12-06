@@ -1,13 +1,13 @@
 import React from "react";
-import styles from "./CartItem.module.css";
+import { connect } from "react-redux";
 import plus from "../../svg/plus.svg";
 import plusMini from "../../svg/plusMini.svg";
 import minus from "../../svg/minus.svg";
 import minusMini from "../../svg/minusMini.svg";
 import arrowLeft from "../../svg/arrowLeft.svg";
 import arrowRight from "../../svg/arrowRight.svg";
-import { connect } from "react-redux";
 import { cartActions } from "../../slices/cart-slice";
+import styles from "./CartItem.module.css";
 
 class CartItem extends React.Component {
   constructor() {
@@ -20,8 +20,6 @@ class CartItem extends React.Component {
       for (const [key, value] of Object.entries(
         this.props.attributesSelected
       )) {
-        // console.log(key);
-        // console.log(this.props.className);
         const attribute = document
           .getElementById(`${idCart}`)
           .querySelector(`.${this.props.className}`)

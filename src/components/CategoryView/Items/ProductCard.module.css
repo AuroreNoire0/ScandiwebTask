@@ -1,7 +1,7 @@
 .container {
+  display: flex;
+  flex-direction: column;
   position: relative;
-  width: 386px;
-  height: 444px;
   padding: 16px;
   font-size: 18px;
   line-height: 160%;

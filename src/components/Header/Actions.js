@@ -1,12 +1,12 @@
 import React from "react";
-import styles from "./Actions.module.css";
+import { connect } from "react-redux";
 import miniCart from "../../svg/miniCart.svg";
 import arrowDown from "../../svg/arrowDown.svg";
 import arrowUp from "../../svg/arrowUp.svg";
-import { connect } from "react-redux";
 import { GET_CURRENCIES } from "../../Queries/Queries";
 import { Query } from "@apollo/client/react/components";
 import { currencyActions } from "../../slices/currency-slice";
+import styles from "./Actions.module.css";
 
 class Actions extends React.Component {
   constructor() {
