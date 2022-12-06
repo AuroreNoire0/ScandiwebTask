@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import Title from "./Title";
-import styles from "./CategoryView.module.css";
-import ProductList from "./Items/ProductList";
 import { useParams } from "react-router-dom";
+import Title from "./Title";
+import ProductList from "./Items/ProductList";
 
 function withParams(Component) {
   return (props) => <Component {...props} params={useParams()} />;
@@ -26,7 +25,7 @@ class CategoryView extends Component {
 
   render() {
     return (
-      <div className={styles.categoryView}>
+      <div>
         <Title category={this.state.curCategory} />
         <ProductList category={this.state.curCategory} />
       </div>

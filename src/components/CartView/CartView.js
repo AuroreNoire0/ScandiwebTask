@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import CartItem from "./CartItem";
 import styles from "./CartView.module.css";
 
-class CartView extends Component {
+class CartView extends React.Component {
   render() {
     const totalPrice = this.props.cart.items
       .map(
@@ -31,7 +31,6 @@ class CartView extends Component {
             brand={i.brand}
             name={i.name}
             prices={i.prices}
-            // totalPrice={i.totalPrice}
             attributes={i.attributes}
             attributesSelected={i.attributesSelected}
             quantity={i.quantity}
@@ -73,4 +72,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(CartView);
-// this.props.cart.items.map(i => (i.prices.find(cur => cur.currency.label === this.props.currency.label).amount * i.quantity))

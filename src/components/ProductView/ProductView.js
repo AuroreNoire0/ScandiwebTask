@@ -1,17 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import parse from "html-react-parser";
 import { connect } from "react-redux";
 import { Query } from "@apollo/client/react/components";
 import { GET_PRODUCT_DETAILS } from "../../Queries/Queries";
-import styles from "./ProductView.module.css";
 import { cartActions } from "../../slices/cart-slice";
+import styles from "./ProductView.module.css";
 
 function withParams(Component) {
   return (props) => <Component {...props} params={useParams()} />;
 }
 
-class ProductView extends Component {
+class ProductView extends React.Component {
   constructor() {
     super();
     this.state = { attributesSelected: {}, item: {}, curImage: 0, price: 0 };
@@ -27,6 +27,7 @@ class ProductView extends Component {
   render() {
     let description = "";
     const setDefault = (response) => {
+      console.log(response);
       let attributesObject = {};
       response.product.attributes.length > 0 &&
         response.product.attributes.map(
@@ -89,8 +90,8 @@ class ProductView extends Component {
             if (loading) return <div>Loading...</div>;
             if (error) return console.log(error);
             return (
-              // console.log(data),
               (description = parse(data.product.description)),
+              console.log(data),
               (
                 <div className={styles.container}>
                   <div className={styles.miniaturesContainer}>
@@ -134,7 +135,7 @@ class ProductView extends Component {
                               {attribute.type === "swatch" ? (
                                 <div
                                   className={styles.colorBoxes}
-                                  data-typename={attribute.__typename}
+                                  data-typename="attributeSet"
                                   id={attribute.id}
                                 >
                                   {attribute.items
@@ -162,7 +163,7 @@ class ProductView extends Component {
                               ) : (
                                 <div
                                   className={styles.sizeBoxes}
-                                  data-typename={attribute.__typename}
+                                  data-typename="attributeSet"
                                   id={attribute.id}
                                 >
                                   {attribute.items
