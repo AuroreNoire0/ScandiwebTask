@@ -63,7 +63,6 @@ class CartItem extends React.Component {
     };
     const onAddToCart = (e) => {
       e.stopPropagation();
-      console.log(this.props);
       this.props.dispatch(
         cartActions.addToCart({
           product: this.props.item,

@@ -27,7 +27,6 @@ class ProductView extends React.Component {
   render() {
     let description = "";
     const setDefault = (response) => {
-      console.log(response);
       let attributesObject = {};
       response.product.attributes.length > 0 &&
         response.product.attributes.map(
@@ -46,7 +45,6 @@ class ProductView extends React.Component {
       });
     };
     const onAddToCart = () => {
-      console.log(this.state.item.product);
       this.props.dispatch(
         cartActions.addToCart({
           product: this.state.item.product,
@@ -91,7 +89,6 @@ class ProductView extends React.Component {
             if (error) return console.log(error);
             return (
               (description = parse(data.product.description)),
-              console.log(data),
               (
                 <div className={styles.container}>
                   <div className={styles.miniaturesContainer}>
