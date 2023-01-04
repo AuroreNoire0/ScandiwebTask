@@ -18,10 +18,11 @@ class ProductView extends React.Component {
   }
 
   componentDidUpdate() {
-    const price = this.state.item.product.prices.find(
+    const price = this.state.item.product?.prices?.find(
       (cur) => cur.currency.label === this.props.currency.label
     );
-    this.state.price.currency.label !== this.props.currency.label &&
+    this.state.price &&
+      this.state.price.currency?.label !== this.props.currency.label &&
       this.setState({ ...this.state, price: price });
   }
   render() {
@@ -184,7 +185,9 @@ class ProductView extends React.Component {
                         <span>price:</span>
                         <span className={styles.priceValue}>
                           {this.props.currency.symbol}
-                          {this.state.price.amount}
+                          {(
+                            Math.round(this.state.price.amount * 100) / 100
+                          ).toFixed(2)}
                         </span>
                       </div>
                       <button

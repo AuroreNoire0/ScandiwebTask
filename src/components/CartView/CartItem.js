@@ -94,7 +94,7 @@ class CartItem extends React.Component {
               </div>
               <div className={styles.price}>
                 {this.props.currency.symbol}
-                {this.state.price.amount}
+                {(Math.round(this.state.price.amount * 100) / 100).toFixed(2)}
               </div>
             </div>
 

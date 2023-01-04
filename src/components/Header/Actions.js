@@ -69,7 +69,11 @@ class Actions extends React.Component {
                 return data.currencies.map((cur) => (
                   <div
                     key={cur.label}
-                    className={styles.currencyItem}
+                    className={
+                      cur.symbol === this.props.currency.symbol
+                        ? `${styles.currencyItem} ${styles.active}`
+                        : `${styles.currencyItem}`
+                    }
                     id={cur.label}
                     data-symbol={cur.symbol}
                     onClick={onSelectCurrency}

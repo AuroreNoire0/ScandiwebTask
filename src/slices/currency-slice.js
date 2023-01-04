@@ -3,8 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 const currencySlice = createSlice({
   name: "currency",
   initialState: {
-    label: JSON.parse(localStorage.getItem("currency")).label,
-    symbol: JSON.parse(localStorage.getItem("currency")).symbol,
+    label: JSON.parse(localStorage.getItem("currency"))?.label
+      ? JSON.parse(localStorage.getItem("currency")).label
+      : "",
+    symbol: JSON.parse(localStorage.getItem("currency"))?.symbol
+      ? JSON.parse(localStorage.getItem("currency")).symbol
+      : "",
     dropdown: false,
   },
   reducers: {

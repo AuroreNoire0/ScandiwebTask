@@ -100,8 +100,8 @@ class ProductCard extends React.Component {
             {this.props.brand} {this.props.name}
           </div>
           <div className={styles.price}>
-            {this.state.price.currency?.symbol}
-            {this.state.price.amount}
+          {this.state.price?.currency?.symbol}
+            {(Math.round(this.state.price?.amount * 100) / 100).toFixed(2)}
           </div>
         </div>
         {!this.props.inStock && (

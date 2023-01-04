@@ -79,6 +79,6 @@
   align-items: center;
 }
 
-.currencyItem:hover {
+.currencyItem.active {
   background-color: #eeeeee;
 }

@@ -8,12 +8,15 @@ import ProductView from "./components/ProductView/ProductView";
 import CartView from "./components/CartView/CartView";
 import { connect } from "react-redux";
 import { currencyActions } from "./slices/currency-slice";
+import { Query } from "@apollo/client/react/components";
+import { GET_CATEGORIES, GET_CURRENCIES } from "./Queries/Queries";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       openMinicart: false,
+      defaultCategory: "",
     };
   }
 
@@ -27,8 +30,40 @@ class App extends Component {
         this.props.dispatch(currencyActions.toggleDropdown(false));
     };
 
+    const setDefaultCurrency = (response) => {
+      !JSON.parse(localStorage.getItem("currency"))?.symbol &&
+        this.props.dispatch(
+          currencyActions.changeCurrency({
+            label: response.currencies[0].label,
+            symbol: response.currencies[0].symbol,
+          })
+        );
+    };
+
     return (
       <div className={styles.container} onClick={onCloseDropdowns}>
+        <Query
+          query={GET_CATEGORIES}
+          onCompleted={(response) =>
+            this.setState({
+              ...this.state,
+              defaultCategory: response.categories[0].name,
+            })
+          }
+        >
+          {({ loading, error, data }) => {
+            if (loading) return <div>Loading...</div>;
+            if (error) return console.log(error);
+          }}
+        </Query>
+        <Query
+          query={GET_CURRENCIES}
+          onCompleted={(response) => setDefaultCurrency(response)}
+        >
+          {({ loading, error, data }) => {
+            if (error) return console.log(error);
+          }}
+        </Query>
         <Header
           onToggleMinicart={onToggleMinicart}
           minicartVisible={this.state.openMinicart}
@@ -39,7 +74,9 @@ class App extends Component {
             <Route
               exact
               path="/"
-              element={<Navigate replace to="/all" />}
+              element={
+                <Navigate replace to={`/${this.state.defaultCategory}`} />
+              }
             ></Route>
             <Route path="/:category" element={<CategoryView />} />
             <Route path="/cart" element={<CartView />}></Route>
